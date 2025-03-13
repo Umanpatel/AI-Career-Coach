@@ -80,7 +80,7 @@ const Header = () => {
             </SignInButton>
           </SignedOut>
           <SignedIn>
-            <UserButton 
+            <UserButton // appearance prop
             appearance={{
                 elements:{
                     avatarBox: 'w-10 h-10',
