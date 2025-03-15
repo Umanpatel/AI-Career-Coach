@@ -26,11 +26,11 @@ const Header = () => {
       <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/">
           <Image
-            src="/logo.jpeg"
+            src="/logo.png"
             alt="AICareer Logo"
             width={200}
             height={70}
-            className="h-14 py-1 w-auto object-contain"
+            className="h-14 py-1 w-auto object-contain rounded-lg"
           />
         </Link>
         <div className="flex items-center space-x-2 md:space-x-4">
