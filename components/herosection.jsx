@@ -25,7 +25,7 @@ const HeroSection = () => {
     }, []);
 
   return (
-    <section className="w-full pt-36 md:pt-48 pb-10">
+    <section className="w-auto pt-36 md:pt-48 pb-10">
       <div className="space-y-6 text-center">
         <div className="space-y-6 mx-auto">
             <h1 className="gradient-title font-bold text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
@@ -52,7 +52,7 @@ const HeroSection = () => {
                     width={1280} 
                     height={720} 
                     alt="Banner ai-career-coach" 
-                    className="rounded-lg shadow-2xl border mx-auto"
+                    className="rounded-lg shadow-2xl border mx-auto w-auto"
                     priority
                 />
             </div>

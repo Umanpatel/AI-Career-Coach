@@ -130,7 +130,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
+  width: 100%; /* Added width */
   height: 100%;
   background: linear-gradient(
     to right,
@@ -143,12 +143,12 @@
   z-index: -1;
 }
 
-.grid-background::before{
+.grid-background::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%;
+  width: 100%; /* Added width */
   height: 100%;
   background: radial-gradient(circle, transparent, rgba(0,0,0,0.9));
 }
