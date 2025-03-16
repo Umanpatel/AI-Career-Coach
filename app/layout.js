@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
           >
             <Header />
             <main className="min-h-screen">{children}</main>
-            <footer className="container mx-auto px-4 text-center text-gray-200">
+            <footer className="container mx-auto p-4 text-center text-gray-500">
               <div>
                 <p>Made with ❤️ By Umang Patel</p>
               </div>
