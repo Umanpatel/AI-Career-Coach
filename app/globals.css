@@ -120,11 +120,13 @@
   * {
     @apply border-border outline-ring/50;
   }
+  
+  html,
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
+    max-width: 100%;
   }
 }
-
 
 .grid-background {
   position: fixed;
@@ -179,4 +181,20 @@
 
 .hero-image.scrolled {
   transform: perspective(1000px) rotateX(0deg);
+}
+
+.overflow-hidden-force {
+  overflow-x: hidden !important;
+  max-width: 100vw;
+  position: relative;
+}
+
+.container {
+  width: 100%;
+  max-width: 100vw;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  overflow-x: hidden;
 }
