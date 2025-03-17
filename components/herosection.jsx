@@ -45,11 +45,11 @@ const HeroSection = () => {
                 </Button>
             </Link>
         </div>
-        <div className="hero-image-wrapper mt-5 md:mt-0 ">
+        <div className="hero-image-wrapper mt-5 -mb-6 md:mt-0 ">
             <div ref={imageRef} className="hero-image">
                 <Image 
                     src={"/aiResume1.webp"} 
-                    width={1280} 
+                    width={1400} 
                     height={720} 
                     alt="Banner ai-career-coach" 
                     className="rounded-lg shadow-2xl border mx-auto w-auto"
