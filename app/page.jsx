@@ -1,5 +1,7 @@
 import HeroSection from "@/components/herosection";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
+import { faqs } from "@/data/faqs";
 import { features } from "@/data/features";
 import { howItWorks } from "@/data/howItWorks";
 import { testimonial } from "@/data/testimonials";
@@ -8,7 +10,7 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div className="relative overflow-x-hidden">
-      <div className="grid-background fixed inset-0 -z-10" />
+      <div className="grid-background" />
       <main className="min-h-screen">
         <HeroSection />
         <section className="relative w-full py-12 md:py-24 lg:py-32 bg-background">
@@ -85,21 +87,21 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="relative w-full py-12 md:py-24 lg:py-32 bg-background">
+        <section className="relative w-full py-12 md:py-24 lg:py-32 bg-muted/50">
           <div className="container mx-auto px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter text-center mb-2">
               Feedback from Our Users
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 m-8 md:m-12 md:p-4 md:pr-4 lg:pr-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 m-8 md:m-12 md:p-4 md:pr-4 lg:pr-12">
               {testimonial.map((testimonial, index) => (
                 <Card 
                   key={index} 
                   className="bg-background"
                 >
-                  <CardContent className="pt-6">
-                    <div>
-                      <div>
-                        <div>
+                  <CardContent className="pt-2">
+                    <div className="flex flex-col space-x-4">
+                      <div className="flex items-center space-x-4">
+                        <div className="relative h-12 w-12 flex-shrink-0">
                           <Image 
                             width={40}
                             height={40}
@@ -114,11 +116,46 @@ export default function Home() {
                           <p className="text-sm text-primary">{testimonial.company}</p>
                         </div>
                       </div>
-                      <blockquote></blockquote>
+                      <blockquote className="pt-7">
+                        <p className="text-muted-foreground italic relative">
+                          <span className="text-3xl text-primary absolute -top-4 -left-2">
+                            &quot;
+                          </span>
+                        {testimonial.quote}
+                        <span className="text-3xl text-primary absolute -bottom-4">
+                            &quot;
+                          </span>
+                        </p>
+                      </blockquote>
                     </div>
                   </CardContent>
                 </Card>
               ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="relative w-full py-12 md:py-24 lg:py-32 bg-background">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="text-center max-w-3xl mx-auto mb-12">
+              <h2 className="text-3xl font-bold mb-4">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-muted-foreground">
+                Find answers to common questions about our platform
+              </p>
+            </div>
+            <div className=" m-8 md:m-12 md:p-4 md:pr-4 lg:pr-12">
+            <Accordion type="single" collapsible className="w-auto">
+              {faqs.map((faq, index) => {
+                return(
+                  <AccordionItem key={index} value={`item-${index}`}>
+                  <AccordionTrigger>{faq.question}</AccordionTrigger>
+                  <AccordionContent>{faq.answer}</AccordionContent>
+                </AccordionItem>
+                )}
+              )}
+            </Accordion>
             </div>
           </div>
         </section>
