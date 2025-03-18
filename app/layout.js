@@ -32,8 +32,8 @@ export default function RootLayout({ children }) {
             suppressHydrationWarning
           >
             <Header />
-            <main className="min-h-screen">{children}</main>
-            <footer className="container mx-auto px-4 text-center text-gray-200">
+            <main className="min-h-screen min-w-screen over">{children}</main>
+            <footer className="container mx-auto p-4 text-center text-gray-500">
               <div>
                 <p>Made with ❤️ By Umang Patel</p>
               </div>
