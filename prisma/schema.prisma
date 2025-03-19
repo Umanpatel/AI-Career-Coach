@@ -1,0 +1,89 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String  @id @default(uuid())
+  ClerkUserId       String  @unique
+  email             String  @unique
+  name              String?
+  imageUrl          String?
+  industry          String? // combined industry-subindustry (e.g."tech-software-developemnt")
+  IndustryInsights  IndustryInsights? @relation(fields: [industry], references: [industry])
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  // Profile Fields (Onboarding) 
+  bio               String?
+  experience        Int?  // Years of experience
+  skills            String[] // Array of Stirngs
+  assessments       Assessment[]
+  resume            Resume?
+  coverLetter       CoverLetter[]
+}
+
+model IndustryInsights {
+  id                  String  @id @default(uuid())
+  industry            String  @unique // The Industry this data belongs to
+  // List of the Users in this Industry
+  users               User[]
+  salaryRanges        Json[] // Array of {role: string, min: float, max: float, median: float, location: string?}
+  // Industry Trends
+  growthRate          Float? // Growth rate of the industry
+  demandLevel         String // ""High", "Medium", "Low"
+  topSkills           String[] // Most in-demand skills
+  // Market Conditions
+  marketOutlook       String // "positive", "negative", "neutral"
+  ketTrends           String[] // Array of current industry trends
+  // Learning Suggestions
+  recommendedSkills   String[]  // Skills recommended for the industry
+  lastUpdated         DateTime @default(now())
+  nextUpdate          DateTime // Next update time
+  @@index([industry])
+}
+
+// Each user can have more than one assesement
+model Assessment{
+  id              String  @id @default(cuid())
+  userId          String
+  user            User    @relation(fields: [userId], references: [id])
+  quizscore       Float 
+  questions       Json[] // Array of {question, answer, userAnswer, isCorrect}
+  category        String // "Technical", "Behavioral", etc.
+  improvementTip  String? //AI-generated tip for improvement
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  @@index([userId]) // Index this table with userId, so this remains unique
+}
+
+// One resume per user
+model Resume {
+  id            String  @id @default(cuid())
+  userId        String  @unique
+  user          User    @relation(fields: [userId], references: [id])
+  content       String @db.Text // Markdown content of the resume
+  // atsScore      Float? // Score from ATS
+  // feedback      String? // Feedback from ATS
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// Each user can have more than one cover letter
+model CoverLetter {
+  id              String  @id @default(cuid())
+  userId          String
+  user            User    @relation(fields: [userId], references: [id])
+  content         String  // Markdown content
+  jobDescription  String? // Job description
+  companyName     String? // Company name
+  jobTitle        String? // Job title
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  @@index([userId]) // Index this table with userId, so this remains unique
+}
+
