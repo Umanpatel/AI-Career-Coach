@@ -27,7 +27,7 @@ model User {
   coverLetter       CoverLetter[]
 }
 
-model IndustryInsights {
+model IndustryInsight {
   id                  String  @id @default(uuid())
   industry            String  @unique // The Industry this data belongs to
   // List of the Users in this Industry
@@ -35,10 +35,10 @@ model IndustryInsights {
   salaryRanges        Json[] // Array of {role: string, min: float, max: float, median: float, location: string?}
   // Industry Trends
   growthRate          Float? // Growth rate of the industry
-  demandLevel         String // ""High", "Medium", "Low"
+  demandLevel         DemandLevel // Enum: "High", "Medium", "Low"
   topSkills           String[] // Most in-demand skills
   // Market Conditions
-  marketOutlook       String // "positive", "negative", "neutral"
+  marketOutlook       MarketOutlook // Enum: "positive", "negative", "neutral"
   ketTrends           String[] // Array of current industry trends
   // Learning Suggestions
   recommendedSkills   String[]  // Skills recommended for the industry
@@ -87,3 +87,14 @@ model CoverLetter {
   @@index([userId]) // Index this table with userId, so this remains unique
 }
 
+enum DemandLevel {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum MarketOutlook {
+  POSITIVE
+  NEGATIVE
+  NEUTRAL
+}
