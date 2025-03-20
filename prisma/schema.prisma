@@ -23,7 +23,7 @@ model User {
   experience        Int?  // Years of experience
 
   // Relations 
-  skills            String[] // Array of Stirngs
+  skills            String[] // Array of Strings
   assessments       Assessment[]
   resume            Resume?
   coverLetter       CoverLetter[]
