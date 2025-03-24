@@ -6,7 +6,6 @@ import { useEffect, useRef } from "react"
 
 const HeroSection = () => {
     const imageRef = useRef(null);
-    //
     useEffect(() => {
         const imageElement = imageRef.current;
 

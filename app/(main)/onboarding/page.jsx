@@ -1,10 +1,13 @@
+import { industries } from "@/data/industries"
 
-const page = () => {
+const OnboardingPage = () => {
+  // Check if user is already onboarded
+
   return (
-    <div>
-      Onboarding
-    </div>
+    <main>
+      <OnBoardingForm industries={industries}/>
+    </main>
   )
 }
 
-export default page
+export default OnboardingPage
