@@ -3,6 +3,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { MarketOutlook } from "@prisma/client";
 
+// Server Actions to update user profile
 export async function updateUser(data){
     
     // Check user is logged In or not 
@@ -26,7 +27,6 @@ export async function updateUser(data){
         
                 async (tx) => 
                 {
-                    
                     // We are performing 3 API calls here.
                     // 1: find if the industry exists
                     let industryInsight = await tx.industryInsight.findUnique({
@@ -78,5 +78,40 @@ export async function updateUser(data){
         console.error("Error updating user and Industry:", error,message);
         throw new Error("Failed to update Profile.");
     }
+}
 
+
+// Server Actions for fetching the onboarding status
+export async function getUserOnboardingStatus(){
+    // Check user is logged In or not 
+    const { useId } = await auth();
+    if(!userId){
+        throw new Error("Unauthorized");
+    }
+
+    // Check user exists in the database
+    const user = await db.user.findUnique({
+        where: {
+            clerkUserId: userId,
+        },
+    });
+    // If user not exists in DB throw an error
+    if(!user) throw new Error("User not found");
+
+    try {
+        const user = await db.user.findUnique({
+            where: {
+                clerkUserId: userId,
+            },
+            select: {
+                industry: true,
+            },
+        });
+        return {
+            isOnboarded: !!user?.industry,
+        };
+    } catch (error) {
+        console.error("Error fetching onboarding status:", error.message);
+        throw new Error("Failed to fetch onboarding status.");
+    }
 }
