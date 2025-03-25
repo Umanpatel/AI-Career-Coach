@@ -1,13 +1,13 @@
 "use server";
 
+import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
-import { MarketOutlook } from "@prisma/client";
 
 // Server Actions to update user profile
 export async function updateUser(data){
     
     // Check user is logged In or not 
-    const { useId } = await auth();
+    const { userId } = await auth();
     if(!userId){
         throw new Error("Unauthorized");
     }
@@ -15,7 +15,7 @@ export async function updateUser(data){
     // Check user exists in the database
     const user = await db.user.findUnique({
         where: {
-            clerkUserId: userId,
+            ClerkUserId: userId,
         },
     });
     // If user not exists in DB throw an error
@@ -84,7 +84,7 @@ export async function updateUser(data){
 // Server Actions for fetching the onboarding status
 export async function getUserOnboardingStatus(){
     // Check user is logged In or not 
-    const { useId } = await auth();
+    const { userId } = await auth();
     if(!userId){
         throw new Error("Unauthorized");
     }
@@ -92,7 +92,7 @@ export async function getUserOnboardingStatus(){
     // Check user exists in the database
     const user = await db.user.findUnique({
         where: {
-            clerkUserId: userId,
+            ClerkUserId: userId,
         },
     });
     // If user not exists in DB throw an error
@@ -101,7 +101,7 @@ export async function getUserOnboardingStatus(){
     try {
         const user = await db.user.findUnique({
             where: {
-                clerkUserId: userId,
+                ClerkUserId: userId,
             },
             select: {
                 industry: true,
