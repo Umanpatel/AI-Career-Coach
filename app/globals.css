@@ -46,39 +46,44 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --background: oklch(0.1 0 0);
+  --foreground: oklch(0.95 0 0);
+  --card: oklch(0.12 0 0);
+  --card-foreground: oklch(0.95 0 0);
+  --popover: oklch(0.12 0 0);
+  --popover-foreground: oklch(0.95 0 0);
+  --primary: oklch(0.7 0.25 255); /* Vibrant blue */
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.15 0 0);
+  --secondary-foreground: oklch(0.95 0 0);
+  --muted: oklch(0.15 0 0);
+  --muted-foreground: oklch(0.7 0 0);
+  --accent: oklch(0.6 0.2 280); /* Purple accent */
+  --accent-foreground: oklch(0.95 0 0);
+  --destructive: oklch(0.6 0.25 30);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.2 0 0);
+  --input: oklch(0.2 0 0);
+  --ring: oklch(0.7 0.25 255);
+  
+  /* Updated chart colors for better visibility */
+  --chart-1: oklch(0.7 0.25 255);  /* Blue */
+  --chart-2: oklch(0.6 0.2 280);   /* Purple */
+  --chart-3: oklch(0.65 0.25 150); /* Teal */
+  --chart-4: oklch(0.7 0.25 50);   /* Orange */
+  --chart-5: oklch(0.6 0.25 330);  /* Pink */
+  
+  --radius: 0.75rem;
+  
+  /* Sidebar styling */
+  --sidebar: oklch(0.08 0 0);
+  --sidebar-foreground: oklch(0.95 0 0);
+  --sidebar-primary: oklch(0.7 0.25 255);
+  --sidebar-primary-foreground: oklch(0.98 0 0);
+  --sidebar-accent: oklch(0.15 0 0);
+  --sidebar-accent-foreground: oklch(0.95 0 0);
+  --sidebar-border: oklch(0.2 0 0);
+  --sidebar-ring: oklch(0.7 0.25 255);
 }
 
 .dark {
@@ -136,10 +141,7 @@
   bottom: 0;
   width: 100vw;
   height: 100vh;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 50px 50px;
+  background-size: 30px 30px;
   pointer-events: none;
   z-index: 0;
 }
@@ -150,8 +152,8 @@
   inset: 0;
   background: radial-gradient(
     circle at center,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.8) 100%
+    transparent 0%,
+    oklch(0.1 0 0 / 0.95) 100%
   );
   z-index: 1;
 }
@@ -166,12 +168,13 @@
   }
   
   .gradient-title {
-    @apply bg-clip-text text-transparent font-extrabold tracking-tighter pb-2 pr-2;
-    background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
-    --tw-gradient-from: rgb(156 163 175);
-    --tw-gradient-via: rgb(229 231 235);
-    --tw-gradient-to: rgb(75 85 99);
-    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-via), var(--tw-gradient-to);
+    @apply bg-clip-text  text-gray-400 font-extrabold tracking-tighter;
+    background-image: linear-gradient(
+      135deg, 
+      oklch(0.7 0.25 255) 0%,    /* Blue */
+      oklch(0.6 0.2 280) 50%,    /* Purple */
+      oklch(0.6 0.25 330) 100%   /* Pink */
+    );
   }
 }
 
@@ -183,6 +186,7 @@
 .hero-image.scrolled {
   transform: perspective(1000px) rotateX(0deg);
 }
+
 
 .overflow-hidden-force {
   overflow-x: hidden !important;
@@ -198,4 +202,36 @@
   padding-left: 1rem;
   padding-right: 1rem;
   overflow-x: hidden;
+}
+
+/* Add subtle gradient to cards on hover */
+.card:hover {
+  background: linear-gradient(
+    145deg,
+    var(--card) 0%,
+    oklch(0.15 0 0) 100%
+  );
+  transition: all 0.3s ease;
+}
+
+/* Glowing effect for primary buttons */
+.btn-primary {
+  background: var(--primary);
+  box-shadow: 0 0 15px var(--primary);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 0 25px var(--primary);
+  transform: translateY(-1px);
+}
+
+/* Card transitions */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
