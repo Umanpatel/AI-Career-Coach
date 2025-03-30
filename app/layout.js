@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/Header";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import { Toaster } from "sonner";
 
 
 // Change font of the application
@@ -34,6 +35,7 @@ export default function RootLayout({ children }) {
           >
             <Header />
             <main className="min-h-screen min-w-screen over">{children}</main>
+            <Toaster richColors/>
             <footer className="container mx-auto p-4 text-center text-gray-500">
               <div>
                 <p>Made with ❤️ By Umang Patel</p>

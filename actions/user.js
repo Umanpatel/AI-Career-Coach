@@ -27,7 +27,7 @@ export async function updateUser(data){
         
                 async (tx) => 
                 {
-                    // We are performing 3 API calls here.
+                    // We are performing 3 Transactions(TX) /API calls here.
                     // 1: find if the industry exists
                     let industryInsight = await tx.industryInsight.findUnique({
                         where: {
@@ -42,10 +42,10 @@ export async function updateUser(data){
                                 industry: data.industry,
                                 salaryRanges: [],
                                 growthRate: 0,
-                                demandLevel: "Medium",
+                                demandLevel: "MEDIUM",
                                 topSkills: [],
-                                marketOutlook: "Neutral",
-                                keytrends: [],
+                                marketOutlook: "NEUTRAL",
+                                keyTrends: undefined, // Remove this field if it's not in schema
                                 recommendedSkills: [],
                                 nextUpdate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
                             },
@@ -70,12 +70,12 @@ export async function updateUser(data){
                     timeout: 10000,
                 }
             );
-            return result.user;
+            return {success:true, ...result};
         
     } 
     catch (error) 
     { 
-        console.error("Error updating user and Industry:", error,message);
+        console.error("Error updating user and Industry:", error.message);
         throw new Error("Failed to update Profile.");
     }
 }
@@ -112,6 +112,6 @@ export async function getUserOnboardingStatus(){
         };
     } catch (error) {
         console.error("Error fetching onboarding status:", error.message);
-        throw new Error("Failed to fetch onboarding status.");
+        throw new Error("Failed to fetch onboarding status." + error.message);
     }
 }
