@@ -123,7 +123,7 @@ const DashboardView = ({ insights }) => {
             <CardTitle className="text-sm font-medium">
               Market Outlook
             </CardTitle>
-            <OutlookIcon className={cn("h-5 w-5", outlookColor)} />
+            <OutlookIcon className={`h-5 w-5 ${outlookColor}`} />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold tracking-tight">
@@ -158,7 +158,8 @@ const DashboardView = ({ insights }) => {
         <Card className="hover:shadow-lg transition-all duration-200 hover:border-primary/50">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Demand Level</CardTitle>
-            <Target className="h-5 w-5 text-blue-500" />
+            <BriefcaseIcon className="h-5 w-5 text-orange-500" />
+            {/* <Target className="h-5 w-5 text-blue-500" /> */}
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold tracking-tight">
@@ -185,7 +186,8 @@ const DashboardView = ({ insights }) => {
         <Card className="hover:shadow-lg transition-all duration-200 hover:border-primary/50">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Skills Match</CardTitle>
-            <Award className="h-5 w-5 text-purple-500" />
+            {/* <Award className="h-5 w-5 text-purple-500" /> */}
+            <Brain className="h-5 w-5 text-pink-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold tracking-tight">
