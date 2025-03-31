@@ -16,8 +16,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { checkUser } from "@/lib/checkUser";
 
-const Header = () => {
+const Header = async () => {
+  await checkUser();
   return (
     <header
       className="fixed top-0 w-full border-b bg-background/80 backdrop-blur-md z-50
@@ -43,10 +45,12 @@ const Header = () => {
             </Link>
             <DropdownMenu>
                 <DropdownMenuTrigger>
-                <Button>
+                <Button asChild>
+                  <div>
                     <StarsIcon className="w-4 h-4" />
                     <span className="hidden md:block">Growth Tools</span>
                     <ChevronDown className="w-4 h-4" />
+                  </div>
                 </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
