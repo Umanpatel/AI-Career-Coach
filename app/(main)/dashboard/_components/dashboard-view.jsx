@@ -25,6 +25,10 @@ import {
   ArrowUpRight,
   Lightbulb,
   Radio,
+  ArrowUpCircle,
+  MinusCircle,
+  ArrowDownCircle,
+  BarChart4,
 } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import {
@@ -71,13 +75,29 @@ const DashboardView = ({ insights }) => {
   const getMarketOutlookInfo = (outlook) => {
     switch (outlook.toLowerCase()) {
       case "positive":
-        return { icon: TrendingUp, color: "text-green-500" };
+        return {
+          icon: ArrowUpCircle,
+          color: "text-green-500",
+          bgColor: "bg-green-500/10",
+        };
       case "neutral":
-        return { icon: ChartIcon, color: "text-yellow-500" };
+        return {
+          icon: MinusCircle,
+          color: "text-yellow-500",
+          bgColor: "bg-yellow-500/10",
+        };
       case "negative":
-        return { icon: TrendingDown, color: "text-red-500" };
+        return {
+          icon: ArrowDownCircle,
+          color: "text-red-500",
+          bgColor: "bg-red-500/10",
+        };
       default:
-        return { icon: ChartIcon, color: "text-gray-500" };
+        return {
+          icon: BarChart4,
+          color: "text-gray-500",
+          bgColor: "bg-gray-500/10",
+        };
     }
   };
 
@@ -123,25 +143,42 @@ const DashboardView = ({ insights }) => {
             <CardTitle className="text-sm font-medium">
               Market Outlook
             </CardTitle>
-            <OutlookIcon className={`h-5 w-5 ${outlookColor}`} />
+            <div
+              className={cn(
+                "rounded-full",
+                getMarketOutlookInfo(insights.marketOutlook).bgColor
+              )}
+            >
+              <OutlookIcon
+                className={cn(
+                  "h-5 w-5",
+                  getMarketOutlookInfo(insights.marketOutlook).color
+                )}
+              />
+            </div>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold tracking-tight">
               {insights.marketOutlook}
             </div>
-            <div className={cn("text-xs font-medium mt-2", outlookColor)}>
+            <div
+              className={cn(
+                "text-xs font-medium mt-2",
+                getMarketOutlookInfo(insights.marketOutlook).color
+              )}
+            >
               {insights.marketOutlook === "POSITIVE"
                 ? "+12% from last quarter"
                 : insights.marketOutlook === "NEGATIVE"
                 ? "-8% from last quarter"
                 : "Stable market conditions"}
-            </div> 
+            </div>
           </CardContent>
         </Card>
 
         <Card className="hover:shadow-lg transition-all duration-200 hover:border-primary/50">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Growth Rate</CardTitle>
+            <CardTitle className="text-sm font-medium">Industry Growth Rate</CardTitle>
             <TrendingUp className="h-5 w-5 text-emerald-500" />
           </CardHeader>
           <CardContent>
@@ -187,7 +224,7 @@ const DashboardView = ({ insights }) => {
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Skills Match</CardTitle>
             {/* <Award className="h-5 w-5 text-purple-500" /> */}
-            <Brain className="h-5 w-5 text-pink-400" />
+            <Brain className="h-5 w-5 text-pink-500" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold tracking-tight">
@@ -195,8 +232,7 @@ const DashboardView = ({ insights }) => {
             </div>
             <Progress
               value={(insights.topSkills.length / 10) * 100}
-              className="mt-2 h-2 bg-gray-700"
-              indicatorClassName="bg-purple-500"
+              className="mt-2 h-2 bg-gray-700 [&>div]:bg-purple-500"
             />
           </CardContent>
         </Card>
@@ -205,7 +241,7 @@ const DashboardView = ({ insights }) => {
       {/* Salary Chart Section */}
       <Card className="col-span-1 lg:col-span-2 hover:shadow-xl transition-all duration-200  from-slate-900/50 to-slate-800/30 border-slate-700/50">
         <CardHeader className="border-b border-slate-700/50">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mb-2">
             <div>
               <CardTitle className="text-2xl font-bold bg-gradient-to-r from-cyan-100 via-teal-100 to-emerald-100 bg-clip-text text-transparent">
                 Salary Distribution
@@ -450,11 +486,11 @@ const DashboardView = ({ insights }) => {
                 <Badge
                   key={skill}
                   variant="secondary"
-                  className="px-3 py-1 bg-blue-400/10 hover:bg-amber-100 hover:text-black  transition-colors"
+                  className="px-3 py-1 bg-blue-400/10 border-white hover:bg-white hover:text-black transition-colors"
                 >
                   {skill}
                 </Badge>
-              ))}
+              ))}  
             </div>
           </CardContent>
         </Card>
