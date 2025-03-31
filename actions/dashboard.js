@@ -33,31 +33,39 @@ export const generateAIInsights = async (industry) => {
   const response = result.response;
   // Fetch the text from the response
   const text = response.text();
-    // Remove the code block formatting and trim whitespace 
-    // cleanedText is in String 
+  // Remove the code block formatting and trim whitespace
+  // cleanedText is in String
   const cleanedText = text.replace(/```(?:json)?\n?/g, "").trim();
 
   return JSON.parse(cleanedText);
 };
 
 export async function getIndustryInsights() {
-  // Check if user is authenticated
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
+  
   const user = await db.user.findUnique({
-    where: { clerkUserId: userId },
+    where: { ClerkUserId: userId },
     include: {
-      industryInsight: true,
+      IndustryInsight: true,
     },
   });
   if (!user) throw new Error("User not found");
 
-  // If no insights exist, generate them
+  // If no insights exist or need updating, generate them
   if (!user.industryInsight) {
     const insights = await generateAIInsights(user.industry);
 
-    const industryInsight = await db.industryInsight.create({
-      data: {
+    // Use upsert instead of create
+    const industryInsight = await db.industryInsight.upsert({
+      where: {
+        industry: user.industry,
+      },
+      update: {
+        ...insights,
+        nextUpdate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      },
+      create: {
         industry: user.industry,
         ...insights,
         nextUpdate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
