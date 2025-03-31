@@ -41,7 +41,7 @@ model IndustryInsight {
   topSkills           String[] // Most in-demand skills
   // Market Conditions
   marketOutlook       MarketOutlook // Enum: "positive", "negative", "neutral"
-  ketTrends           String[] // Array of current industry trends
+  keyTrends           String[] // Array of current industry trends
   // Learning Suggestions
   recommendedSkills   String[]  // Skills recommended for the industry
   lastUpdated         DateTime @default(now())
