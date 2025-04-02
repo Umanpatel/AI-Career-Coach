@@ -16,6 +16,7 @@ import { generateQuiz, saveQuizResult } from "@/actions/interview";
 import QuizResult from "./quiz-result";
 import useFetch from "@/hooks/use-fetch";
 import { BarLoader } from "react-spinners";
+import { Loader2 } from "lucide-react";
 
 export default function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -69,7 +70,8 @@ export default function Quiz() {
   const finishQuiz = async () => {
     const score = calculateScore();
     try {
-      await saveQuizResultFn(quizData, answers, score);
+      const result = await saveQuizResultFn(quizData, answers, score);
+      setResultData({ ...result, score });
       toast.success("Quiz completed!");
     } catch (error) {
       toast.error(error.message || "Failed to save quiz results");
@@ -92,7 +94,20 @@ export default function Quiz() {
   if (resultData) {
     return (
       <div className="mx-2">
-        <QuizResult result={resultData} onStartNew={startNewQuiz} />
+        <QuizResult 
+          result={{
+            questions: quizData.map((q, i) => ({
+              question: q.question,
+              userAnswer: answers[i],
+              answer: q.correctAnswer,
+              isCorrect: answers[i] === q.correctAnswer,
+              explanation: q.explanation
+            })),
+            improvementTip: resultData.improvementTip
+          }}
+          score={calculateScore()}
+          onStartNew={startNewQuiz} 
+        />
       </div>
     );
   }
@@ -165,7 +180,7 @@ export default function Quiz() {
           className="ml-auto"
         >
           {savingResult && (
-            <BarLoader className="mt-4" width={"100%"} color="gray" />
+            <Loader2 className="mt-2 h-4 w-4 animate-spin"/>
           )}
           {currentQuestion < quizData.length - 1
             ? "Next Question"

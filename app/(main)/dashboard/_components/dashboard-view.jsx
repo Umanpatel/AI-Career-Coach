@@ -276,7 +276,7 @@ const DashboardView = ({ insights }) => {
                       stopColor="rgb(191 219 254)"
                       stopOpacity={0.9}
                     />{" "}
-                    {/* light blue-200 */}
+               
                     <stop
                       offset="95%"
                       stopColor="rgb(191 219 254)"
@@ -295,7 +295,7 @@ const DashboardView = ({ insights }) => {
                       stopColor="rgb(147 197 253)"
                       stopOpacity={0.9}
                     />{" "}
-                    {/* light blue-300 */}
+    
                     <stop
                       offset="95%"
                       stopColor="rgb(147 197 253)"
@@ -308,7 +308,7 @@ const DashboardView = ({ insights }) => {
                       stopColor="rgb(96 165 250)"
                       stopOpacity={0.9}
                     />{" "}
-                    {/* light blue-400 */}
+                
                     <stop
                       offset="95%"
                       stopColor="rgb(96 165 250)"

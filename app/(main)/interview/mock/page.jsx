@@ -13,7 +13,6 @@ export default function MockInterviewPage() {
             Back to Interview Preparation
           </Button>
         </Link>
-
         <div>
           <h1 className="text-6xl font-bold gradient-title">Mock Interview</h1>
           <p className="text-muted-foreground">
@@ -21,7 +20,6 @@ export default function MockInterviewPage() {
           </p>
         </div>
       </div>
-
       <Quiz />
     </div>
   );

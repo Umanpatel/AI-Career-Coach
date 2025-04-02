@@ -64,7 +64,7 @@ export async function saveQuizResult(questions, answers, score) {
     if (!userId) throw new Error("Unauthorized");
   
     const user = await db.user.findUnique({
-      where: { clerkUserId: userId },
+      where: { ClerkUserId: userId },
     });
   
     if (!user) throw new Error("User not found");
@@ -115,7 +115,7 @@ export async function saveQuizResult(questions, answers, score) {
       const assessment = await db.assessment.create({
         data: {
           userId: user.id,
-          quizScore: score,
+          quizscore: score, // Changed from quizScore to quizscore to match schema
           questions: questionResults,
           category: "Technical",
           improvementTip,
@@ -134,7 +134,7 @@ export async function saveQuizResult(questions, answers, score) {
     if (!userId) throw new Error("Unauthorized");
   
     const user = await db.user.findUnique({
-      where: { clerkUserId: userId },
+      where: { ClerkUserId: userId },
     });
   
     if (!user) throw new Error("User not found");
@@ -155,3 +155,4 @@ export async function saveQuizResult(questions, answers, score) {
       throw new Error("Failed to fetch assessments");
     }
   }
+
