@@ -3,8 +3,10 @@
 import { Trophy, CheckCircle2, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
+import { useEffect } from "react";
 
 export default function QuizResult({ result, score, onStartNew }) {
+  
   // Add null checks and default values
   if (!result || !result.questions) {
     return (
@@ -24,8 +26,6 @@ export default function QuizResult({ result, score, onStartNew }) {
     );
   }
 
-  const formattedScore = typeof score === 'number' ? score.toFixed(1) : '0.0';
-
   return (
     <Card>
       <CardHeader>
@@ -34,7 +34,13 @@ export default function QuizResult({ result, score, onStartNew }) {
       <CardContent>
         <div className="space-y-4">
           <div className="text-center">
-            <p className="text-3xl font-bold">{formattedScore}%</p>
+            <p className={`text-3xl font-bold ${
+              Number(score) >= 70 ? 'text-green-500' : 
+              Number(score) >= 40 ? 'text-yellow-500' : 
+              'text-red-500'
+            }`}>
+              {score}%
+            </p>
             <p className="text-sm text-muted-foreground">Your Score</p>
           </div>
           <div className="space-y-6">

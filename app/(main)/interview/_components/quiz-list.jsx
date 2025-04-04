@@ -83,6 +83,7 @@ export default function QuizList({ assessments }) {
           </DialogHeader>
           <QuizResult
             result={selectedQuiz}
+            score={selectedQuiz?.quizscore}
             hideStartNew
             onStartNew={() => router.push("/interview/mock")}
           />
