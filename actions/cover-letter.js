@@ -8,6 +8,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
+// Server Action to generate a cover letter
 export async function generateCoverLetter(data) {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
@@ -64,5 +65,63 @@ export async function generateCoverLetter(data) {
     console.error("Error generating cover letter:", error.message);
     throw new Error("Failed to generate cover letter");
   }
+}
 
+// Server action to get all cover letters for the user
+export async function getCoverLetters() {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+
+  const user = await db.user.findUnique({
+    where: { ClerkUserId: userId },
+  });
+
+  if (!user) throw new Error("User not found");
+
+  return await db.coverLetter.findMany({
+    where: {
+      userId: user.id,
+    },
+    orderBy: {
+        createdAt: "desc",
+    }
+  });
+}
+
+// Server Action to get cover letter by ID
+export async function getCoverLetterById(id) {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+
+  const user = await db.user.findUnique({
+    where: { ClerkUserId: userId },
+  });
+
+  if (!user) throw new Error("User not found");
+
+  return await db.coverLetter.findUnique({
+    where: {
+      id,
+      userId: user.id,
+    },
+  });
+}
+
+// Server Action to delete cover letter by ID
+export async function deleteCoverLetter(id) {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+
+  const user = await db.user.findUnique({
+    where: { ClerkUserId: userId },
+  });
+
+  if (!user) throw new Error("User not found");
+
+  return await db.coverLetter.delete({
+    where: {
+      id,
+      userId: user.id,
+    },
+  });
 }
