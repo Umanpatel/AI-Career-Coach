@@ -22,14 +22,15 @@ import useFetch from "@/hooks/use-fetch";
 import { useUser } from "@clerk/nextjs";
 import { entriesToMarkdown } from "@/app/lib/helper";
 import { resumeSchema } from "@/app/lib/schema";
-import EntryForm from "./entry-form";
-import PDFButton from "./pdf-button";
+import EntryForm from "./entry-form"; 
+
 
 export default function ResumeBuilder({ initialContent }) {
   const [activeTab, setActiveTab] = useState("edit");
   const [previewContent, setPreviewContent] = useState(initialContent);
   const { user } = useUser();
   const [resumeMode, setResumeMode] = useState("preview");
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const {
     control,
@@ -110,6 +111,101 @@ export default function ResumeBuilder({ initialContent }) {
       .join("\n\n");
   };
 
+  const generatePDF = async () => {
+    setIsGenerating(true);
+    try {
+      const html2pdf = (await import('html2pdf.js')).default;
+      
+      // Get the source element and create a clean clone
+      const sourceElement = document.getElementById("resume-pdf");
+      const pdfContent = sourceElement.cloneNode(true);
+      
+      // Create a temporary container with web-safe colors
+      const container = document.createElement('div');
+      
+      // Apply clean styles that override any oklch colors
+      const cleanStyles = `
+        * {
+          color: #000000 !important;
+          background-color: #ffffff !important;
+          border-color: #000000 !important;
+        }
+        a {
+          color: #0000EE !important;
+          text-decoration: underline;
+        }
+        h1, h2, h3, h4, h5, h6 {
+          color: #000000 !important;
+          border-bottom-color: #000000 !important;
+        }
+      `;
+      
+      const styleElement = document.createElement('style');
+      styleElement.textContent = cleanStyles;
+      
+      container.style.cssText = `
+        padding: 40px;
+        background: #ffffff;
+        font-family: Arial, sans-serif;
+        color: #000000;
+      `;
+      
+      // Add cleaned content to container with web-safe colors
+      container.innerHTML = `
+        <div style="
+          color: #000000;
+          font-family: Arial, sans-serif;
+          line-height: 1.6;
+        ">
+          ${pdfContent.innerHTML}
+        </div>
+      `;
+      
+      // Add the style element to override any oklch colors
+      container.appendChild(styleElement);
+      
+      // Configure PDF options
+      const opt = {
+        margin: [15, 15],
+        filename: 'resume.pdf',
+        image: { 
+          type: 'jpeg', 
+          quality: 1 
+        },
+        html2canvas: { 
+          scale: 2,
+          useCORS: true,
+          backgroundColor: '#ffffff',
+          letterRendering: true,
+          removeContainer: true,
+          ignoreElements: (element) => {
+            // Ignore elements with oklch colors
+            const style = window.getComputedStyle(element);
+            return style.color.includes('oklch') || 
+                   style.backgroundColor.includes('oklch');
+          }
+        },
+        jsPDF: { 
+          unit: 'mm', 
+          format: 'a4', 
+          orientation: 'portrait'
+        }
+      };
+
+      await html2pdf()
+        .from(container)
+        .set(opt)
+        .save();
+
+      toast.success("PDF generated successfully!");
+    } catch (error) {
+      console.error("PDF generation error:", error);
+      toast.error("Failed to generate PDF");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   const onSubmit = async (data) => {
     try {
       const formattedContent = previewContent
@@ -133,7 +229,7 @@ export default function ResumeBuilder({ initialContent }) {
         <div className="space-x-2">
           <Button
             variant="destructive"
-            onClick={handleSubmit(onSubmit)}
+            onClick={onSubmit}
             disabled={isSaving}
           >
             {isSaving ? (
@@ -143,12 +239,24 @@ export default function ResumeBuilder({ initialContent }) {
               </>
             ) : (
               <>
-                <Save className="h-4 w-4 mr-2" />
+                <Save className="h-4 w-4" />
                 Save
               </>
             )}
           </Button>
-          <PDFButton />
+          <Button onClick={generatePDF} disabled={isGenerating}>
+            {isGenerating ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Generating PDF...
+              </>
+            ) : (
+              <>
+                <Download className="h-4 w-4" />
+                Download PDF
+              </>
+            )}
+          </Button>
         </div>
       </div>
 
@@ -159,7 +267,7 @@ export default function ResumeBuilder({ initialContent }) {
         </TabsList>
 
         <TabsContent value="edit">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+          <form className="space-y-8">
             {/* Contact Information */}
             <div className="space-y-4">
               <h3 className="text-lg font-medium">Contact Information</h3>
@@ -368,21 +476,26 @@ export default function ResumeBuilder({ initialContent }) {
             />
           </div>
           <div className="hidden">
-            <div id="resume-pdf">
-              <MDEditor.Markdown
+            <div 
+              id="resume-pdf" 
+              className="pdf-content"
+              style={{
+                padding: '20px',
+                background: 'white',
+                color: 'black',
+              }}
+            >
+              <MDEditor.Markdown 
                 source={previewContent}
                 style={{
-                  background: "white",
-                  color: "black",
+                  whiteSpace: 'pre-wrap',
+                  fontFamily: 'Arial, sans-serif',
                 }}
               />
             </div>
           </div>
         </TabsContent>
       </Tabs>
-      <div className="flex justify-end space-x-2">
-        <PDFButton content={previewContent} />
-      </div>
     </div>
   );
 }
