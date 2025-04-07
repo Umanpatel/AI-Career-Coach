@@ -8,7 +8,7 @@ import { Toaster } from "sonner";
 
 
 // Change font of the application
-const inter =  Inter({subsets: ["georgia"]});
+const inter =  Inter({subsets: ["latin"]});
 
 export const metadata = {
   title: "AI Career Coach",
