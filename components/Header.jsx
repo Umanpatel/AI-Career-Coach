@@ -28,8 +28,8 @@ const Header = async () => {
       <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/">
           <Image
-            src="/logo.png"
-            alt="AICareer Logo"
+            src="/logo.PNG"
+            alt="AICareerLogo"
             width={200}
             height={70}
             className="h-14 py-1 w-auto object-contain rounded-lg"
