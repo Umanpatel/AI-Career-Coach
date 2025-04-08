@@ -12,7 +12,7 @@ AI Career Coach helps professionals accelerate their careers through:
 - Personalized career guidance
 
 ## Tech Stack
-## Frontend
+### Frontend
 - Next.js 14: App router, server components, server actions
 - TailwindCSS: Styling and responsive design
 - Shadcn/ui: Component library
@@ -20,14 +20,14 @@ AI Career Coach helps professionals accelerate their careers through:
 - Zod: Schema validation
 - MDEditor: Markdown editing and preview
 
-## Backend
+### Backend
 - Next.js Server Actions: API endpoints
 - Prisma: Database ORM
 - PostgreSQL: Database
 - Google Gemini AI: AI content generation
 - Clerk: Authentication and user management
 
-## Tools & Libraries
+### Tools & Libraries
 - html2pdf.js: PDF generation
 - date-fns: Date formatting
 - Recharts: Data visualization
