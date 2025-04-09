@@ -12,6 +12,14 @@ AI Career Coach helps professionals accelerate their careers through:
 - Personalized career guidance
 
 ## Tech Stack
+
+![image](https://github.com/user-attachments/assets/d418811c-68e0-447e-935d-0f6d9196f492)
+
+![image](https://github.com/user-attachments/assets/261cb983-ee27-4514-bfc1-c1cd58b53b5a)
+
+![image](https://github.com/user-attachments/assets/1455fe83-c6e5-495c-8cc6-fb2eae2cac55)
+
+
 ### Frontend
 - Next.js 14: App router, server components, server actions
 - TailwindCSS: Styling and responsive design
